@@ -1,0 +1,146 @@
+supported_languages:
+  - sv
+  - en
+
+recognizers:
+  # --- Language-agnostic predefined recognizers (registered per language) ---
+  - name: EmailRecognizer
+    type: predefined
+    supported_language: sv
+  - name: EmailRecognizer
+    type: predefined
+    supported_language: en
+
+  - name: CreditCardRecognizer
+    type: predefined
+    supported_language: sv
+  - name: CreditCardRecognizer
+    type: predefined
+    supported_language: en
+
+  - name: IbanRecognizer
+    type: predefined
+    supported_language: sv
+  - name: IbanRecognizer
+    type: predefined
+    supported_language: en
+
+  - name: UrlRecognizer
+    type: predefined
+    supported_language: sv
+  - name: UrlRecognizer
+    type: predefined
+    supported_language: en
+
+  - name: CryptoRecognizer
+    type: predefined
+    supported_language: sv
+  - name: CryptoRecognizer
+    type: predefined
+    supported_language: en
+
+  - name: IpRecognizer
+    type: predefined
+    supported_language: sv
+  - name: IpRecognizer
+    type: predefined
+    supported_language: en
+
+  - name: DateRecognizer
+    type: predefined
+    supported_language: sv
+  - name: DateRecognizer
+    type: predefined
+    supported_language: en
+
+  # --- Swedish-specific custom recognizers ---
+  - name: SwedishPersonnummerRecognizer
+    supported_language: sv
+    supported_entity: SE_PERSONNUMMER
+    type: custom
+    patterns:
+      - name: personnummer_12
+        regex: '\b(?:19|20)\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[-+]?\d{4}\b'
+        score: 0.85
+      - name: personnummer_10
+        regex: '\b\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[-+]?\d{4}\b'
+        score: 0.6
+    context:
+      - personnummer
+      - personnr
+      - pnr
+      - person nummer
+      - födelsenummer
+
+  - name: SwedishSamordningsnummerRecognizer
+    supported_language: sv
+    supported_entity: SE_SAMORDNINGSNUMMER
+    type: custom
+    patterns:
+      - name: samordningsnummer_12
+        regex: '\b(?:19|20)\d{2}(?:0[1-9]|1[0-2])(?:6[1-9]|[78]\d|9[01])[-+]?\d{4}\b'
+        score: 0.85
+      - name: samordningsnummer_10
+        regex: '\b\d{2}(?:0[1-9]|1[0-2])(?:6[1-9]|[78]\d|9[01])[-+]?\d{4}\b'
+        score: 0.6
+    context:
+      - samordningsnummer
+      - samordningsnr
+
+  - name: SwedishOrganisationsnummerRecognizer
+    supported_language: sv
+    supported_entity: SE_ORGANISATIONSNUMMER
+    type: custom
+    patterns:
+      - name: organisationsnummer
+        regex: '\b\d{2}[2-9]\d{3}-?\d{4}\b'
+        score: 0.6
+    context:
+      - organisationsnummer
+      - org.nr
+      - orgnr
+      - org nummer
+
+  - name: SwedishPhoneRecognizer
+    supported_language: sv
+    supported_entity: SE_PHONE_NUMBER
+    type: custom
+    patterns:
+      - name: swedish_mobile
+        regex: '\b(?:\+46[\s-]?|0)7[02369][\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}\b'
+        score: 0.75
+      - name: swedish_landline
+        regex: '\b(?:\+46[\s-]?|0)(?:8|[1-9]\d)[\s-]?\d{2,3}[\s-]?\d{2,3}[\s-]?\d{2,3}\b'
+        score: 0.5
+    context:
+      - telefon
+      - telefonnummer
+      - tel
+      - mobil
+      - mobilnummer
+      - ring
+
+  - name: SwedishPostalCodeRecognizer
+    supported_language: sv
+    supported_entity: SE_POSTAL_CODE
+    type: custom
+    patterns:
+      - name: postnummer
+        regex: '\b\d{3}\s?\d{2}\b'
+        score: 0.3
+    context:
+      - postnummer
+      - postnr
+      - postadress
+
+  - name: SwedishBankgiroRecognizer
+    supported_language: sv
+    supported_entity: SE_BANKGIRO
+    type: custom
+    patterns:
+      - name: bankgiro
+        regex: '\b\d{3,4}-\d{4}\b'
+        score: 0.4
+    context:
+      - bankgiro
+      - bg

@@ -1,0 +1,21 @@
+nlp_engine_name: transformers
+models:
+  - lang_code: sv
+    model_name:
+      spacy: sv_core_news_sm
+      transformers: KB/bert-base-swedish-cased-ner
+
+ner_model_configuration:
+  labels_to_ignore:
+    - "O"
+  aggregation_strategy: simple
+  stride: 16
+  alignment_mode: expand
+  model_to_presidio_entity_mapping:
+    PER: PERSON
+    LOC: LOCATION
+    ORG: ORGANIZATION
+    MISC: MISC
+  low_confidence_score_multiplier: 0.4
+  low_score_entity_names:
+    - MISC

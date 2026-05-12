@@ -4,6 +4,10 @@ models:
     model_name:
       spacy: sv_core_news_sm
       transformers: KB/bert-base-swedish-cased-ner
+  - lang_code: en
+    model_name:
+      spacy: en_core_web_lg
+      transformers: dslim/bert-base-NER
 
 ner_model_configuration:
   labels_to_ignore:

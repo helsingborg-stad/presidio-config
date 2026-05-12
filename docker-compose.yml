@@ -31,7 +31,7 @@ services:
       - traefik.http.routers.analyzer.tls.certresolver=letsencrypt
       - traefik.http.routers.analyzer.middlewares=analyzer-stripprefix
       - traefik.http.middlewares.analyzer-stripprefix.stripprefix.prefixes=/analyzer
-      - traefik.http.services.analyzer.loadbalancer.server.port=80
+      - traefik.http.services.analyzer.loadbalancer.server.port=3000
 
   anonymizer:
     image: mcr.microsoft.com/presidio-anonymizer:latest
@@ -44,4 +44,4 @@ services:
       - traefik.http.routers.anonymizer.tls.certresolver=letsencrypt
       - traefik.http.routers.anonymizer.middlewares=anonymizer-stripprefix
       - traefik.http.middlewares.anonymizer-stripprefix.stripprefix.prefixes=/anonymizer
-      - traefik.http.services.anonymizer.loadbalancer.server.port=80
+      - traefik.http.services.anonymizer.loadbalancer.server.port=3000

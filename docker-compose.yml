@@ -10,11 +10,13 @@ services:
       - --certificatesresolvers.letsencrypt.acme.tlschallenge=true
       - --certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL}
       - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
-      - --entrypoints.websecure.address=:443
+      - --entrypoints.analyzer.address=:5002
+      - --entrypoints.anonymizer.address=:5001
       # - "--certificatesresolvers.letsencrypt.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
     ports:
       - "8080:8080"
-      - "443:443"
+      - "5002:5002"
+      - "5001:5001"
     volumes:
       - "./letsencrypt:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
@@ -26,11 +28,10 @@ services:
     restart: unless-stopped
     labels:
       - traefik.enable=true
-      - "traefik.http.routers.analyzer.rule=Host(`${DOMAIN}`) && PathPrefix(`/analyzer`)"
-      - traefik.http.routers.analyzer.entrypoints=websecure
+      - "traefik.http.routers.analyzer.rule=Host(`${DOMAIN}`)"
+      - traefik.http.routers.analyzer.entrypoints=analyzer
+      - traefik.http.routers.analyzer.tls=true
       - traefik.http.routers.analyzer.tls.certresolver=letsencrypt
-      - traefik.http.routers.analyzer.middlewares=analyzer-stripprefix
-      - traefik.http.middlewares.analyzer-stripprefix.stripprefix.prefixes=/analyzer
       - traefik.http.services.analyzer.loadbalancer.server.port=3000
 
   anonymizer:
@@ -39,9 +40,8 @@ services:
     restart: unless-stopped
     labels:
       - traefik.enable=true
-      - "traefik.http.routers.anonymizer.rule=Host(`${DOMAIN}`) && PathPrefix(`/anonymizer`)"
-      - traefik.http.routers.anonymizer.entrypoints=websecure
+      - "traefik.http.routers.anonymizer.rule=Host(`${DOMAIN}`)"
+      - traefik.http.routers.anonymizer.entrypoints=anonymizer
+      - traefik.http.routers.anonymizer.tls=true
       - traefik.http.routers.anonymizer.tls.certresolver=letsencrypt
-      - traefik.http.routers.anonymizer.middlewares=anonymizer-stripprefix
-      - traefik.http.middlewares.anonymizer-stripprefix.stripprefix.prefixes=/anonymizer
       - traefik.http.services.anonymizer.loadbalancer.server.port=3000

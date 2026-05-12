@@ -1,0 +1,16 @@
+services:
+  analyzer:
+    build: ./analyzer
+    image: presidio-analyzer-sv:latest
+    container_name: presidio-analyzer-sv
+    restart: unless-stopped
+    ports:
+      - "5002:3000"
+
+  anonymizer:
+    image: mcr.microsoft.com/presidio-anonymizer:latest
+    container_name: presidio-anonymizer
+    restart: unless-stopped
+    ports:
+      - "5001:3000"
+ 
